@@ -1,0 +1,30 @@
+{
+  "name": "all-serverless",
+  "version": "0.0.1",
+  "description": "let everyone have their own backend without any server",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "serverless",
+    "cloud function",
+    "laf",
+    "supabase",
+    "cloudbase",
+    "baas",
+    "faas"
+  ],
+  "author": "yenche123",
+  "license": "MIT",
+  "dependencies": {
+    "@cloudbase/node-sdk": "^2.9.1",
+    "@supabase/supabase-js": "^1.35.4",
+    "laf-client-sdk": "^0.8.2",
+    "tsd": "^0.22.0",
+    "wx-server-sdk": "^2.6.3"
+  },
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  }
+}
