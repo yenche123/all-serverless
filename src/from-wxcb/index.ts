@@ -6,7 +6,8 @@
 
 import wxcloud from "wx-server-sdk"
 import {
-  ICloud
+  ICloud,
+  DB as WxDB
 } from "wx-server-sdk"
 import { AsCloud } from "../as-cloud"
 import { TotalConfig } from "../types"
@@ -69,6 +70,10 @@ export const callFunction = async (opt: ICloud.CallFunctionParam): Promise<IClou
     errMsg: res.errMsg ?? "",
    }
    return res2
+}
+
+export const database = (opt?: WxDB.IDatabaseConfig) => {
+  
 }
 
 /**

@@ -1,8 +1,11 @@
-
+/** 外部 sdk */
 import { CloudOptions as LafCloudOpt } from "laf-client-sdk"
 import { ICloudBaseConfig as TcbCloudOpt } from "@cloudbase/node-sdk/types"
 import { ICloudInitOptions as WxcbCloudOpt } from "wx-server-sdk"
 import { SupabaseClientOptions } from "@supabase/supabase-js"
+
+/** 内部方法 */
+import { RequireSth } from "../utils/type-tool"
 
 export enum SdkType {
   LAF = "laf-client-sdk",
@@ -80,3 +83,5 @@ export interface TotalConfig {
 
   supabaseConfig?: SupabaseCloudOpt
 }
+
+export type AsCloudCfg = RequireSth<TotalConfig, "targetSdk">

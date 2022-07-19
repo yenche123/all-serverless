@@ -1,12 +1,15 @@
-import { TotalConfig, SdkType } from "./types";
-import { CallFunctionParam } from "./types/cloud";
-import { RequireSth } from "./utils/type-tool"
-import { callFunction } from "./functions"
+
+// 外部 sdk 引入
 import tcb, { CloudBase } from "@cloudbase/node-sdk";
 import { Cloud as LafCloud } from "laf-client-sdk"
 import wxcb from "wx-server-sdk"
 
-type AsCloudCfg = RequireSth<TotalConfig, "targetSdk">
+// 内部 sdk
+import { TotalConfig, AsCloudCfg, SdkType } from "./types"
+import { CallFunctionParam, DatabaseParam } from "./types/cloud"
+import { callFunction } from "./functions"
+import { Db } from "./db"
+import valTool from "./utils/val-tool"
 
 class AsCloud {
 
@@ -61,6 +64,16 @@ class AsCloud {
   
   public callFunction<T = any>(opt: CallFunctionParam): Promise<T> {
     return callFunction(this, opt)
+  }
+
+  public database(opt?: DatabaseParam) {
+    // 可能会传入 opt.env 只在
+    let dbCfg: AsCloudCfg = valTool.copyObject(this.config)
+    if(opt?.env) {
+      if(dbCfg.tcbConfig) dbCfg.tcbConfig.env = opt.env
+      if(dbCfg.wxcbConfig) dbCfg.wxcbConfig.env = opt.env
+    }
+    return new Db(dbCfg)
   }
 
 }
