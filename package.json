@@ -20,6 +20,7 @@
   "dependencies": {
     "@cloudbase/node-sdk": "^2.9.1",
     "@supabase/supabase-js": "^1.35.4",
+    "database-ql": "^0.8.2",
     "laf-client-sdk": "^0.8.2",
     "tsd": "^0.22.0",
     "wx-server-sdk": "^2.6.3"

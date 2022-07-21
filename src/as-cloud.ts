@@ -68,12 +68,7 @@ class AsCloud {
 
   public database(opt?: DatabaseParam) {
     // 可能会传入 opt.env 只在
-    let dbCfg: AsCloudCfg = valTool.copyObject(this.config)
-    if(opt?.env) {
-      if(dbCfg.tcbConfig) dbCfg.tcbConfig.env = opt.env
-      if(dbCfg.wxcbConfig) dbCfg.wxcbConfig.env = opt.env
-    }
-    return new Db(dbCfg)
+    return new Db(this, opt)
   }
 
 }
