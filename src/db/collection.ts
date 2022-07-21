@@ -4,6 +4,8 @@ import { Database as TcbDDD  } from "@cloudbase/node-sdk"
 type TcbCol = TcbDDD.CollectionReference
 import { DB as WxcbDDD } from "wx-server-sdk"
 type WxcbCol = WxcbDDD.CollectionReference
+import { AddRes as LafAddRes } from "database-ql/dist/commonjs/result-types"
+
 
 // 引入 内部变量
 import { SdkType } from "../types"
@@ -11,9 +13,14 @@ import { DocumentRef } from "./document"
 import { Db } from "./index"
 import { Query } from "./query"
 
+// 判断 add() 返回的结果类型
+type AddRes<T extends SdkType> = 
+  T extends SdkType.LAF ? LafAddRes : T extends SdkType.WXCB ? WxcbDDD.IAddResult : TcbDDD.IAddRes
+
 export class CollectionRef extends Query {
 
   public target: SdkType
+  public origin: SdkType
   
   public lafCol?: LafCol
   public tcbCol?: TcbCol
@@ -23,7 +30,9 @@ export class CollectionRef extends Query {
     super(db, collName)
 
     let t = db.target
+    let o = db.origin
     this.target = t
+    this.origin = o
 
     if(t === SdkType.LAF) {
       this.lafCol = db.lafDb?.collection(collName)
@@ -53,8 +62,14 @@ export class CollectionRef extends Query {
       throw new Error("使用 add 时，请传参 object 或 array")
     }
 
+    let ori = this.origin
     let docRef = new DocumentRef(this)
-    return docRef.create(data)
+
+    if(ori === SdkType.WXCB) {
+      data = data.data
+    }
+
+    return docRef.create<AddRes<typeof ori>>(data)
   }
 
   /**

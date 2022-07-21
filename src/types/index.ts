@@ -36,6 +36,12 @@ export interface TotalConfig {
 	targetSdk?: SdkType
 
 	/**
+	 * 业务层使用哪个 sdk 的写法
+	 * @default wx-server-sdk
+	 */
+	originStyle?: SdkType
+
+	/**
 	 * 是否开启 调试（也就是打印），建议第一次使用时打开
 	 * @default false
 	 */
@@ -84,4 +90,4 @@ export interface TotalConfig {
   supabaseConfig?: SupabaseCloudOpt
 }
 
-export type AsCloudCfg = RequireSth<TotalConfig, "targetSdk">
+export type AsCloudCfg = RequireSth<TotalConfig, "targetSdk" | "originStyle">

@@ -13,6 +13,7 @@ import valTool from "./utils/val-tool"
 
 class AsCloud {
 
+  public origin: SdkType
   public target: SdkType
   private config: AsCloudCfg
 
@@ -21,9 +22,11 @@ class AsCloud {
 
   public constructor(config: TotalConfig) {
     this.target = config.targetSdk ?? SdkType.LAF
+    this.origin = config.originStyle ?? SdkType.WXCB
 
     let _c: AsCloudCfg = {
       targetSdk: this.target,
+      originStyle: this.origin,
     }
 
     if(_c.targetSdk === SdkType.LAF) {
@@ -67,7 +70,6 @@ class AsCloud {
   }
 
   public database(opt?: DatabaseParam) {
-    // 可能会传入 opt.env 只在
     return new Db(this, opt)
   }
 

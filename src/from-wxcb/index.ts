@@ -10,13 +10,13 @@ import {
   DB as WxDB
 } from "wx-server-sdk"
 import { AsCloud } from "../as-cloud"
-import { TotalConfig } from "../types"
+import { SdkType, TotalConfig, AsCloudCfg } from "../types"
 import { CallFunctionResult } from "../types/cloud"
+export * from "../types"
 
 let debug: boolean
 let hasInited: boolean
 let asCloud: AsCloud
-
 
 /**
  * 将根据
@@ -33,6 +33,9 @@ export const openapi = wxcloud.openapi
 export const cloudPay = wxcloud.cloudPay
 
 export const init = (opt: TotalConfig): void => {
+
+  if(!opt.originStyle) opt.originStyle = SdkType.WXCB
+
   hasInited = true
   asCloud = new AsCloud(opt)
   if(opt.debug) debug = true
@@ -73,7 +76,7 @@ export const callFunction = async (opt: ICloud.CallFunctionParam): Promise<IClou
 }
 
 export const database = (opt?: WxDB.IDatabaseConfig) => {
-  
+  return asCloud.database(opt)
 }
 
 /**

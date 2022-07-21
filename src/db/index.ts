@@ -15,6 +15,7 @@ import { CollectionRef } from "./collection";
 class Db {
 
   public target: SdkType
+  public origin: SdkType
 
   public lafDb?: LafDb
   public wxDb?: WxDb
@@ -22,7 +23,9 @@ class Db {
 
   constructor(asCloud: AsCloud, opt?: DatabaseParam) {
     let t = asCloud.target
+    let o = asCloud.origin
     this.target = t
+    this.origin = o
     
     if(t === SdkType.LAF) {
       this.lafDb = asCloud.getLafApp()?.database()

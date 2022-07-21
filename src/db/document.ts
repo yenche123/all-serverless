@@ -9,7 +9,6 @@ type WxcbCol = WxcbDDD.CollectionReference
 // 内部 变量 引入
 import { SdkType } from "../types"
 import { CollectionRef } from "./collection"
-import { AddRes } from "../types/db"
 import check from "../utils/check"
 import { sdkCha } from "../some-characteristic"
 
@@ -24,9 +23,10 @@ export class DocumentRef {
     this.id = docID
   }
 
-  async create(data: any): Promise<AddRes> {
+  async create<T>(data: any): Promise<T> {
     let col = this._col
     let t = col.target
+    let ori = col.origin
 
     let tmpRes: any = {};   // 暂时获取返回值
     let isArray = check.isArray(data)
@@ -34,6 +34,12 @@ export class DocumentRef {
     if(t === SdkType.LAF) {
       let lafCol = col.lafCol as LafCol
       let tmpLaf: LafAddRes;
+
+      if(ori === SdkType.LAF) {
+        tmpRes = await lafCol.add(data)
+        return tmpRes
+      }
+
       if(isArray) {
         if(!tmpRes.ids) tmpRes.ids = []
         for(let i=0; i<(data as any[]).length; i++) {
@@ -79,7 +85,7 @@ export class DocumentRef {
       } 
     }
 
-    return tmpRes as AddRes
+    return tmpRes
   }
 
 
