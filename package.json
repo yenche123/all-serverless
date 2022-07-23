@@ -4,7 +4,7 @@
   "description": "let everyone have their own backend without any server",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cross-env ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsaXVrZXkiOiJBQkNERSIsImlhdCI6MTY1ODQwODE5OH0.du3GZfvzLizMe0I26oImvMFwy_waxI0YN0Tq1YK8tQY ts-node ./test/safeRule"
   },
   "keywords": [
     "serverless",
@@ -26,6 +26,7 @@
     "wx-server-sdk": "^2.6.3"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "typescript": "^4.7.4"
   }
 }
