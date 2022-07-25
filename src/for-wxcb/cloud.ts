@@ -1,13 +1,13 @@
 import { InitConfig, SdkType } from "../type"
-import { TcbCloud, LafCloud, tcb, WXCB_ICloud, wxcb } from "../type/external"
-
+import { TcbCloud, LafCloud, WXCB_ICloud, wxcb, tcb } from "../type/external"
+import { callFunction } from "./functions"
 class Cloud {
-
 
   public target: SdkType
 
   public tcbCloud?: TcbCloud
   public lafCloud?: LafCloud
+  public wxcbCloud = wxcb
 
   constructor(cfg: InitConfig) {
     let t = cfg.targetSdk
@@ -23,7 +23,7 @@ class Cloud {
       }
     }
     else if(t === SdkType.TCB) {
-      this.tcbCloud = new TcbCloud(cfg.tcbConfig)
+      this.tcbCloud = tcb.init(cfg.tcbConfig)
     }
     else if(t === SdkType.WXCB) {
       wxcb.init(cfg.wxcbConfig)
@@ -41,7 +41,7 @@ class Cloud {
   }
 
   public callFunction(opt: WXCB_ICloud.CallFunctionParam) {
-
+    return callFunction(this, opt)
   }
 
 }
