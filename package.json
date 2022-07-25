@@ -4,6 +4,7 @@
   "description": "let everyone have their own backend without any server",
   "main": "dist/index.js",
   "scripts": {
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.esm.json",
     "callFunction": "ts-node ./test/callFunction",
     "safeRule": "cross-env ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsaXVrZXkiOiJBQkNERSIsImlhdCI6MTY1ODQwODE5OH0.du3GZfvzLizMe0I26oImvMFwy_waxI0YN0Tq1YK8tQY ts-node ./test/safeRule"
   },

@@ -11,8 +11,8 @@ import { CloudBase as TcbCloud } from "@cloudbase/node-sdk"
 import { Cloud as LafCloud } from "laf-client-sdk"
 
 // 整个 tcb 和 wxcb
-import tcb from "@cloudbase/node-sdk"
-import wxcb from "wx-server-sdk"
+import * as tcb from "@cloudbase/node-sdk"
+import * as wxcb from "wx-server-sdk"
 
 // sdk 下的 cloud / db 类型
 import { ICloud as WXCB_CLOUD, DB as WXCB_DDD } from "wx-server-sdk"

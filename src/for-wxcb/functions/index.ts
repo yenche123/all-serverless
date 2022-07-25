@@ -2,9 +2,9 @@ import { SdkType } from "../../type"
 import { Cloud } from "../cloud"
 import { WXCB_CLOUD } from "../../type/external"
 
-type CallFuncResult = Promise<WXCB_CLOUD.CallFunctionResult | void>
+type CallFuncRes = WXCB_CLOUD.CallFunctionResult | void
 
-export async function callFunction(cloud: Cloud, option: WXCB_CLOUD.CallFunctionParam): CallFuncResult {
+export async function callFunction(cloud: Cloud, option: WXCB_CLOUD.CallFunctionParam): Promise<CallFuncRes> {
   let t = cloud.target
 
   if(t === SdkType.LAF) {
@@ -18,7 +18,7 @@ export async function callFunction(cloud: Cloud, option: WXCB_CLOUD.CallFunction
   }
 }
 
-async function handle_laf(cloud: Cloud, option: WXCB_CLOUD.CallFunctionParam): CallFuncResult {
+async function handle_laf(cloud: Cloud, option: WXCB_CLOUD.CallFunctionParam): Promise<CallFuncRes> {
   let lafCloud = cloud.lafCloud
   let res = await lafCloud?.invokeFunction(option.name, option.data)
   return {
@@ -28,7 +28,7 @@ async function handle_laf(cloud: Cloud, option: WXCB_CLOUD.CallFunctionParam): C
   }
 }
 
-async function handle_tcb(cloud: Cloud, option: WXCB_CLOUD.CallFunctionParam): CallFuncResult {
+async function handle_tcb(cloud: Cloud, option: WXCB_CLOUD.CallFunctionParam): Promise<CallFuncRes> {
   let tcbCloud = cloud.tcbCloud
   let callFuncParam = { ...option, data: option.data ?? {} }
   let resFromTcb = await tcbCloud?.callFunction(callFuncParam)
@@ -41,7 +41,7 @@ async function handle_tcb(cloud: Cloud, option: WXCB_CLOUD.CallFunctionParam): C
   return res
 }
 
-async function handle_wxcb(cloud: Cloud, option: WXCB_CLOUD.CallFunctionParam): CallFuncResult {
+async function handle_wxcb(cloud: Cloud, option: WXCB_CLOUD.CallFunctionParam): Promise<CallFuncRes> {
   let wxcbCloud = cloud.wxcbCloud
   return await wxcbCloud.callFunction(option)
 }

@@ -2,15 +2,16 @@
   "compileOnSave": true,
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
-    "target": "ES2017",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "target": "es5",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "experimentalDecorators": true,                      /* Enable experimental support for TC39 stage 2 draft decorators. */
-    "module": "commonjs",                                /* Specify what module code is generated. */
-    "outDir": "dist/commonjs",                                   /* Specify an output folder for all emitted files. */
+    "module": "es6",                                     /* Specify what module code is generated. */
+    "outDir": "dist/esm",                                   /* Specify an output folder for all emitted files. */
     "removeComments": false,                             /* Disable emitting comments. */
     "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
     "strict": true,                                      /* Enable all strict type-checking options. */
     "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
-    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
+    "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
+    "moduleResolution": "node"
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "test"]
