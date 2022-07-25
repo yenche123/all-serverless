@@ -14,8 +14,34 @@ import { Cloud as LafCloud } from "laf-client-sdk"
 import tcb from "@cloudbase/node-sdk"
 import wxcb from "wx-server-sdk"
 
-// 微信云开发 会用到的一些类型或对象
-import { ICloud as WXCB_ICloud, DB as WXCB_DB } from "wx-server-sdk"
+// sdk 下的 cloud / db 类型
+import { ICloud as WXCB_CLOUD, DB as WXCB_DDD } from "wx-server-sdk"
+import { Db as LAF_DB } from "laf-client-sdk"
+import { Database as TCB_DDD } from "@cloudbase/node-sdk"
+
+// sdk 下的 collection 类型以及其下方法的入参和出参类型
+import { CollectionReference as LAF_COL } from "database-ql"
+type TCB_COL = TCB_DDD.CollectionReference
+type WXCB_COL = WXCB_DDD.CollectionReference
+
+// sdk 下的 document 类型
+import { DocumentReference as LAF_DOC } from "database-ql"
+type TCB_DOC = TCB_DDD.DocumentReference
+type WXCB_DOC = WXCB_DDD.DocumentReference
+
+// collection 类型下的 add()
+import { AddRes as LafAddRes } from "database-ql/dist/commonjs/result-types"
+type TcbAddRes = TCB_DDD.IAddRes
+type WxcbAddRes = {
+  errMsg: string
+  _id?: string | number
+  _ids?: Array<string | number>
+}
+
+// collection 类型下的 aggregate()
+import LafAgg from "database-ql/dist/commonjs/aggregate"
+type TcbAgg = TCB_DDD.Aggregation
+type WxcbAgg = WXCB_DDD.Aggregate
 
 
 export {
@@ -26,6 +52,20 @@ export {
   LafCloud,
   tcb,
   wxcb,
-  WXCB_ICloud,
-  WXCB_DB,
+  WXCB_CLOUD,
+  WXCB_DDD,
+  LAF_DB,
+  TCB_DDD,
+  LAF_COL,
+  TCB_COL,
+  WXCB_COL,
+  LAF_DOC,
+  TCB_DOC,
+  WXCB_DOC,
+  LafAddRes,
+  TcbAddRes,
+  WxcbAddRes,
+  LafAgg,
+  TcbAgg,
+  WxcbAgg,
 }

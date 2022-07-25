@@ -1,5 +1,5 @@
 import { InitConfig, SdkType } from "../type"
-import { wxcb, WXCB_DB, WXCB_ICloud } from "../type/external"
+import { wxcb, WXCB_DDD, WXCB_CLOUD } from "../type/external"
 import check from "./check"
 import { Cloud } from "./cloud"
 
@@ -27,12 +27,12 @@ function callContainer(options: any) {
   return cloud.callContainer(options)
 }
 
-async function callFunction(opt: WXCB_ICloud.CallFunctionParam): Promise<WXCB_ICloud.CallFunctionResult | void> {
+async function callFunction(opt: WXCB_CLOUD.CallFunctionParam): Promise<WXCB_CLOUD.CallFunctionResult | void> {
   return cloud.callFunction(opt)
 }
 
-function database(opt?: WXCB_DB.IDatabaseConfig) {
-
+function database(opt?: WXCB_DDD.IDatabaseConfig) {
+  return cloud.database(opt)
 }
 
 function getWXContext() {
@@ -40,7 +40,7 @@ function getWXContext() {
     console.warn("getWXContext 不会进行转换")
     console.warn("而是直接调用原 wx-server-sdk 的方法.....")
   }
-  return wxcb.getWXContext()
+  return cloud.getWXContext()
 }
 
 export default {

@@ -1,6 +1,7 @@
 import { InitConfig, SdkType } from "../type"
-import { TcbCloud, LafCloud, WXCB_ICloud, wxcb, tcb } from "../type/external"
+import { TcbCloud, LafCloud, WXCB_CLOUD, wxcb, tcb, WXCB_DDD } from "../type/external"
 import { callFunction } from "./functions"
+import { Db } from "./db"
 class Cloud {
 
   public target: SdkType
@@ -40,8 +41,16 @@ class Cloud {
     return promise
   }
 
-  public callFunction(opt: WXCB_ICloud.CallFunctionParam) {
+  public callFunction(opt: WXCB_CLOUD.CallFunctionParam) {
     return callFunction(this, opt)
+  }
+
+  public database(opt?: WXCB_DDD.IDatabaseConfig) {
+    return new Db(this, opt)
+  }
+
+  public getWXContext() {
+    return wxcb.getWXContext()
   }
 
 }

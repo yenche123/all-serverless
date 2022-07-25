@@ -1,10 +1,10 @@
 import { SdkType } from "../../type"
 import { Cloud } from "../cloud"
-import { WXCB_ICloud } from "../../type/external"
+import { WXCB_CLOUD } from "../../type/external"
 
-type CallFuncResult = Promise<WXCB_ICloud.CallFunctionResult | void>
+type CallFuncResult = Promise<WXCB_CLOUD.CallFunctionResult | void>
 
-export async function callFunction(cloud: Cloud, option: WXCB_ICloud.CallFunctionParam): CallFuncResult {
+export async function callFunction(cloud: Cloud, option: WXCB_CLOUD.CallFunctionParam): CallFuncResult {
   let t = cloud.target
 
   if(t === SdkType.LAF) {
@@ -18,7 +18,7 @@ export async function callFunction(cloud: Cloud, option: WXCB_ICloud.CallFunctio
   }
 }
 
-async function handle_laf(cloud: Cloud, option: WXCB_ICloud.CallFunctionParam): CallFuncResult {
+async function handle_laf(cloud: Cloud, option: WXCB_CLOUD.CallFunctionParam): CallFuncResult {
   let lafCloud = cloud.lafCloud
   let res = await lafCloud?.invokeFunction(option.name, option.data)
   return {
@@ -28,11 +28,11 @@ async function handle_laf(cloud: Cloud, option: WXCB_ICloud.CallFunctionParam): 
   }
 }
 
-async function handle_tcb(cloud: Cloud, option: WXCB_ICloud.CallFunctionParam): CallFuncResult {
+async function handle_tcb(cloud: Cloud, option: WXCB_CLOUD.CallFunctionParam): CallFuncResult {
   let tcbCloud = cloud.tcbCloud
   let callFuncParam = { ...option, data: option.data ?? {} }
   let resFromTcb = await tcbCloud?.callFunction(callFuncParam)
-  let res: WXCB_ICloud.CallFunctionResult = {
+  let res: WXCB_CLOUD.CallFunctionResult = {
     result: resFromTcb?.result,
     requestID: resFromTcb?.requestId,
     //@ts-ignore
@@ -41,7 +41,7 @@ async function handle_tcb(cloud: Cloud, option: WXCB_ICloud.CallFunctionParam): 
   return res
 }
 
-async function handle_wxcb(cloud: Cloud, option: WXCB_ICloud.CallFunctionParam): CallFuncResult {
+async function handle_wxcb(cloud: Cloud, option: WXCB_CLOUD.CallFunctionParam): CallFuncResult {
   let wxcbCloud = cloud.wxcbCloud
   return await wxcbCloud.callFunction(option)
 }
