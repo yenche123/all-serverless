@@ -17,14 +17,16 @@ interface RegExpParam {
 class Db {
 
   public target: SdkType
+  public debug: boolean
 
   public lafDb?: LAF_DB
   public tcbDb?: TCB_DDD.Db
   public wxcbDb?: WXCB_DDD.Database
 
-  constructor(cloud: Cloud, opt?: WXCB_DDD.IDatabaseConfig) {
+  constructor(cloud: Cloud, opt?: WXCB_DDD.IDatabaseConfig, debug: boolean = false) {
     let t = cloud.target
     this.target = t
+    this.debug = debug
 
     if(t === SdkType.LAF) {
       let lafCloud = cloud.lafCloud

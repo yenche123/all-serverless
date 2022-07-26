@@ -5,6 +5,7 @@ import { Db } from "./db"
 class Cloud {
 
   public target: SdkType
+  public debug: boolean
 
   public tcbCloud?: TcbCloud
   public lafCloud?: LafCloud
@@ -17,6 +18,7 @@ class Cloud {
     }
 
     this.target = t
+    this.debug = cfg.debug ?? false
     
     if(t === SdkType.LAF) {
       if(cfg.lafConfig) {
@@ -46,7 +48,7 @@ class Cloud {
   }
 
   public database(opt?: WXCB_DDD.IDatabaseConfig) {
-    return new Db(this, opt)
+    return new Db(this, opt, this.debug)
   }
 
   public getWXContext() {
