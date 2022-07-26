@@ -43,6 +43,12 @@ import LafAgg from "database-ql/dist/commonjs/aggregate"
 type TcbAgg = TCB_DDD.Aggregation
 type WxcbAgg = WXCB_DDD.Aggregate
 
+// db.createCollection() Laf 没有这个函数
+type WxcbCreateCollectionRes = {
+  requestId?: string
+  errMsg: string       // 默认为 createCollection:ok
+}
+
 
 export {
   LafCloudOpt,
@@ -68,4 +74,5 @@ export {
   LafAgg,
   TcbAgg,
   WxcbAgg,
+  WxcbCreateCollectionRes,
 }
