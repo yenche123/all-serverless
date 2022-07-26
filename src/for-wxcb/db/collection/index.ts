@@ -2,28 +2,13 @@ import { Db } from "../index"
 import { SdkType } from "../../../type"
 import { LAF_COL, TCB_COL, WXCB_COL, WXCB_DDD } from "../../../type/external"
 import { DocumentRef } from "./document"
+import { Aggregate } from "./aggregate"
+import { Query } from "./query"
 
-class Collection {
-
-  public target: SdkType
-
-  public lafCol?: LAF_COL
-  public tcbCol?: TCB_COL
-  public wxcbCol?: WXCB_COL
+class Collection extends Query {
 
   constructor(db: Db, colName: string) {
-    let t = db.target
-    this.target = t
-
-    if(t === SdkType.LAF) {
-      this.lafCol = db.lafDb?.collection(colName)
-    }
-    else if(t === SdkType.TCB) {
-      this.tcbCol = db.tcbDb?.collection(colName)
-    }
-    else if(t === SdkType.WXCB) {
-      this.wxcbCol = db.wxcbDb?.collection(colName)
-    }
+    super(db, colName)
   }
 
   public doc(docId: string | number) {
@@ -36,7 +21,7 @@ class Collection {
   }
 
   public aggregate() {
-    
+    return new Aggregate(this)
   }
 
 }
