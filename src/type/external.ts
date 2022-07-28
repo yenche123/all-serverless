@@ -20,9 +20,11 @@ import { Db as LAF_DB } from "laf-client-sdk"
 import { Database as TCB_DDD } from "@cloudbase/node-sdk"
 
 // sdk 下的 collection 类型以及其下方法的入参和出参类型
-import { CollectionReference as LAF_COL } from "database-ql"
+import { CollectionReference as LAF_COL, Query as LAF_QRY } from "database-ql"
 type TCB_COL = TCB_DDD.CollectionReference
 type WXCB_COL = WXCB_DDD.CollectionReference
+type TCB_QRY = TCB_DDD.Query
+type WXCB_QRY = WXCB_DDD.Query
 
 // sdk 下的 document 类型
 import { DocumentReference as LAF_DOC } from "database-ql"
@@ -65,6 +67,9 @@ export {
   LAF_COL,
   TCB_COL,
   WXCB_COL,
+  LAF_QRY,
+  TCB_QRY,
+  WXCB_QRY,
   LAF_DOC,
   TCB_DOC,
   WXCB_DOC,
