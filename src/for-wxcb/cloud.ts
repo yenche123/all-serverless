@@ -21,7 +21,10 @@ class Cloud {
     this.debug = cfg.debug ?? false
     
     if(t === SdkType.LAF) {
-      if(cfg.lafConfig) {
+      if(cfg.lafCloudSdk) {
+        this.lafCloud = cfg.lafCloudSdk
+      }
+      else if(cfg.lafConfig) {
         this.lafCloud = new LafCloud(cfg.lafConfig)
       }
     }

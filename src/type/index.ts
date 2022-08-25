@@ -1,4 +1,4 @@
-import { LafCloudOpt, TcbCloudOpt, WxcbCloudOpt } from "./external"
+import { LafCloudOpt, TcbCloudOpt, WxcbCloudOpt, LafCloud } from "./external"
 
 export enum SdkType {
   LAF = "laf-client-sdk",
@@ -36,6 +36,14 @@ export interface InitConfig {
 	 * @tip 详情见 https://github.com/labring/laf/tree/main/packages/client-sdk
 	 */
 	lafConfig?: LafCloudOpt
+
+	/**
+	 * 如果当前业务环境在 laf 的云函数上
+	 * 并且调用的数据库资源也在 laf 上
+	 * 多传一个 @/cloud-sdk 生成的 cloud
+	 * 将直接使用 @/cloud-sdk 进行后续调用，免鉴权
+	 */
+	lafCloudSdk?: LafCloud
 
   /**
 	 * 当 targetSdk 为 @cloudbase/node-sdk 时必有
