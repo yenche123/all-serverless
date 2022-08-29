@@ -1,5 +1,5 @@
 import { SdkType } from "../../../../type";
-import { LafAgg, TcbAgg, WxcbAgg } from "../../../../type/external";
+import { LafAgg, TcbAgg, WxcbAgg, WxcbAggregateEndRes } from "../../../../type/external";
 import { Collection } from "../index";
 import { sdkCha } from "../../../../some-characteristic"
 
@@ -41,7 +41,7 @@ class Aggregate {
     return this
   }
 
-  async end() {
+  async end(): Promise<WxcbAggregateEndRes | void> {
     let t = this.target
     let tmp: any;
     if(t === SdkType.LAF) {
@@ -59,12 +59,6 @@ class Aggregate {
           tmp.errMsg = sdkCha.WXCB.errMsg_aggregate_ok
         }
       }
-      if(tmp && tmp.requestId) {
-        tmp.requestID = tmp.requestId
-      }
-      else {
-        tmp.requestID = "The requestID is not supported by Laf aggregate"
-      }
       return tmp
     }
     else if(t === SdkType.TCB) {
@@ -74,12 +68,11 @@ class Aggregate {
         delete res.data
         res.errMsg = sdkCha.WXCB.errMsg_aggregate_ok
       }
-      if(res && res.requestId) res.requestID = res.requestId
       return res
     }
     else if(t === SdkType.WXCB) {
       let res = await this.wxcbAgg?.end()
-      return res
+      return res as WxcbAggregateEndRes
     }
   }
 

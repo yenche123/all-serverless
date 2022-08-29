@@ -58,6 +58,13 @@ type WxcbCreateCollectionRes = {
   errMsg: string       // 默认为 createCollection:ok
 }
 
+// db.collection().aggregate().Xxxx().end()
+// 实测 聚合操作的返回 没有 requestId
+type WxcbAggregateEndRes = {
+  list: any[],
+  errMsg: string,
+}
+
 
 export {
   LafCloudOpt,
@@ -89,5 +96,6 @@ export {
   WxcbCreateCollectionRes,
   LafCommand,
   TcbCommand,
-  WxcbCommand
+  WxcbCommand,
+  WxcbAggregateEndRes,
 }
