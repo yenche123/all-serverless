@@ -8,7 +8,7 @@ export type RunTranParam1 = (transaction: TCB_DDD.Transaction) => void | Promise
 export const runTransaction = (db: Db, callback: RunTranParam1, times: number = 3): Promise<any> | void => {
   let t = db.target
   if(t === SdkType.LAF) {
-    throw new Error("laf 赞不支持 runTransaction API")
+    throw new Error("laf 暂不支持 runTransaction API")
   }
   else if(t === SdkType.TCB) {
     let tcbDb = db.tcbDb as TCB_DDD.Db
@@ -24,7 +24,7 @@ export const runTransaction = (db: Db, callback: RunTranParam1, times: number = 
 export const startTransaction = (db: Db): Promise<TCB_DDD.Transaction> | void => {
   let t = db.target
   if(t === SdkType.LAF) {
-    throw new Error("laf 赞不支持 startTransaction API")
+    throw new Error("laf 暂不支持 startTransaction API")
   }
   else if(t === SdkType.TCB) {
     let tcbDb = db.tcbDb as TCB_DDD.Db
