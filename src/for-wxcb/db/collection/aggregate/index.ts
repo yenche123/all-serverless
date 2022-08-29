@@ -59,6 +59,12 @@ class Aggregate {
           tmp.errMsg = sdkCha.WXCB.errMsg_aggregate_ok
         }
       }
+      if(tmp && tmp.requestId) {
+        tmp.requestID = tmp.requestId
+      }
+      else {
+        tmp.requestID = "The requestID is not supported by Laf aggregate"
+      }
       return tmp
     }
     else if(t === SdkType.TCB) {
@@ -68,6 +74,7 @@ class Aggregate {
         delete res.data
         res.errMsg = sdkCha.WXCB.errMsg_aggregate_ok
       }
+      if(res && res.requestId) res.requestID = res.requestId
       return res
     }
     else if(t === SdkType.WXCB) {
