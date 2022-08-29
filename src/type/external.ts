@@ -19,6 +19,13 @@ import { ICloud as WXCB_CLOUD, DB as WXCB_DDD } from "wx-server-sdk"
 import { Db as LAF_DB } from "laf-client-sdk"
 import { Database as TCB_DDD } from "@cloudbase/node-sdk"
 
+// Command
+const lafCloud = new LafCloud({})
+const lafDb = lafCloud.database()
+type LafCommand = typeof lafDb.command
+type TcbCommand = typeof TCB_DDD.Command
+type WxcbCommand = WXCB_DDD.DatabaseCommand
+
 // sdk 下的 collection 类型以及其下方法的入参和出参类型
 import { CollectionReference as LAF_COL, Query as LAF_QRY } from "database-ql"
 type TCB_COL = TCB_DDD.CollectionReference
@@ -80,4 +87,7 @@ export {
   TcbAgg,
   WxcbAgg,
   WxcbCreateCollectionRes,
+  LafCommand,
+  TcbCommand,
+  WxcbCommand
 }

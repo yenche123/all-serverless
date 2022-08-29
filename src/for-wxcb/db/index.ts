@@ -1,4 +1,4 @@
-import { WXCB_DDD, LAF_DB, TCB_DDD } from "../../type/external";
+import { WXCB_DDD, LAF_DB, TCB_DDD, LafCommand, TcbCommand, WxcbCommand } from "../../type/external";
 import { Cloud } from "../cloud";
 import { SdkType } from "../../type"
 import { Collection } from "./collection";
@@ -49,17 +49,18 @@ class Db {
   /**
    * 注意：返回所连接云厂商的 command
    */
-  get command() {
+  get command(): LafCommand | TcbCommand | WxcbCommand {
     let t = this.target
     if(t === SdkType.LAF) {
-      return this.lafDb?.command
+      return (this.lafDb as LAF_DB).command
     }
     else if(t === SdkType.TCB) {
-      return this.tcbDb?.command
+      return (this.tcbDb as TCB_DDD.Db).command
     }
     else if(t === SdkType.WXCB) {
-      return this.wxcbDb?.command
+      return (this.wxcbDb as WXCB_DDD.Database).command
     }
+    return (this.lafDb as LAF_DB).command
   }
 
   /**
