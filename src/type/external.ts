@@ -54,7 +54,7 @@ type WxcbAgg = WXCB_DDD.Aggregate
 
 // db.createCollection()
 type WxcbCreateCollectionRes = {
-  requestId?: string
+  requestId?: string   // 实测微信云开发 创建集合的接口 返回的是 requestId 而不是 requestID
   errMsg: string       // 默认为 createCollection:ok
 }
 
