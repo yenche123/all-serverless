@@ -80,7 +80,7 @@ const cloud = new Cloud(lafConfig)
 
 ### TcbCloudOpt
 
-结构与腾讯云开发 Node.js SDK 的 `init()` 入参保持一直，即
+结构与腾讯云开发 Node.js SDK 的 `init()` 入参保持一致，即
 
 ```js
 const tcb = require("@cloudbase/node-sdk")
@@ -91,7 +91,7 @@ const app = tcb.init(tcbCloudOpt)
 
 ### WxcbCloudOpt
 
-结构与微信云开发 Node.js SDK 的 `init()` 入参保持一直，即
+结构与微信云开发 Node.js SDK 的 `init()` 入参保持一致，即
 
 ```js
 const cloud = require("wx-server-sdk")
