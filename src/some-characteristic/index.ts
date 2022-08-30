@@ -9,5 +9,8 @@ export const sdkCha: Record<string, Record<string, string>> = {
     "errMsg_update_ok": "collection.update:ok",
     "errMsg_remove_ok": "collection.remove:ok",
     "errMsg_aggregate_ok": "collection.aggregate:ok",
+    "errMsg_doc_get_ok": "document.get:ok",
+    "errMsg_doc_set_ok": "document.set:ok",
+    
   }
 }

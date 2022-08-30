@@ -14,6 +14,7 @@ import {
 } from "../../../../type/external"
 import check from "../../../../utils/check"
 import { sdkCha } from "../../../../some-characteristic"
+import { WxcbDocGetRes, WxcbDocSetRes } from "../../../type"
 
 class DocumentRef {
 
@@ -94,6 +95,88 @@ class DocumentRef {
       tmpWxcb = (await wxcbCol.add(param)) as WxcbAddRes
       return tmpWxcb
     }
+  }
+
+  /**
+   * 获取记录数据
+   */
+  async get(): Promise<WxcbDocGetRes> {
+    const t = this.target
+    let tmp: any;
+    let res: any;
+    if(t === SdkType.LAF) {
+      tmp = await this.lafDoc?.get()
+      res = {
+        data: tmp.data,
+        errMsg: sdkCha.WXCB.errMsg_doc_get_ok,
+      }
+    }
+    else if(t === SdkType.TCB) {
+      tmp = await this.tcbDoc?.get()
+      res = {
+        data: tmp.data,
+        errMsg: sdkCha.WXCB.errMsg_doc_get_ok
+      }
+    }
+    else if(t === SdkType.WXCB) {
+      res = await this.wxcbDoc?.get()
+    }
+    return res as WxcbDocGetRes
+  }
+
+  /**
+   * 创建或添加数据
+   */
+  async set(opt: { data: any }): Promise<WxcbDocSetRes> {
+    const t = this.target
+    let tmp: any;
+    let res: any;
+    if(t === SdkType.LAF) {
+      tmp = await this.lafDoc?.set(opt.data)
+      res = {
+        _id: tmp.upsertId ?? this.id,
+        stats: {
+          created: tmp.updated === 0 ? 1 : 0,
+          updated: tmp.updated,
+        },
+        errMsg: sdkCha.WXCB.errMsg_doc_set_ok
+      }
+    }
+    else if(t === SdkType.TCB) {
+      // 如果文档原来存在，返回
+      //    { updated: 1, upsertedId: null, requestId: xxxxx }
+      // 如果文档原来不存在，则返回
+      //    { updated: 0, upsertedId: string, requestId: xxxx }
+      tmp = await this.tcbDoc?.set(opt.data)
+      res = {
+        _id: tmp.upsertedId ?? this.id,
+        stats: {
+          created: tmp.updated === 1 ? 0 : 1,
+          updated: tmp.updated,
+        },
+        errMsg: sdkCha.WXCB.errMsg_doc_set_ok
+      }
+    }
+    else if(t === SdkType.WXCB) {
+      res = await this.wxcbDoc?.set(opt)
+    }
+    return res
+  }
+
+  /**
+   * 更新一条记录
+   */
+  async update() {
+    const t = this.target
+    let tmp: any;
+    let res: any;
+  }
+
+  /**
+   * 删除一条记录
+   */
+  async remove() {
+    
   }
 
 }

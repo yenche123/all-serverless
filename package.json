@@ -8,7 +8,8 @@
     "callFunction": "ts-node ./test/callFunction",
     "createCollection": "ts-node ./test/createCollection",
     "safeRule": "ts-node ./test/safeRule",
-    "addFields": "ts-node ./test/aggregate-addFields"
+    "addFields": "ts-node ./test/aggregate-addFields",
+    "setDoc": "ts-node ./test/setDoc"
   },
   "keywords": [
     "serverless",
