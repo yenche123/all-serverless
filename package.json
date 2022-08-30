@@ -10,7 +10,8 @@
     "safeRule": "ts-node ./test/safeRule",
     "addFields": "ts-node ./test/aggregate-addFields",
     "setDoc": "ts-node ./test/setDoc",
-    "updateDoc": "ts-node ./test/updateDoc"
+    "updateDoc": "ts-node ./test/updateDoc",
+    "removeDoc": "ts-node ./test/removeDoc"
   },
   "keywords": [
     "serverless",

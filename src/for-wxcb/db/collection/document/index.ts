@@ -14,7 +14,7 @@ import {
 } from "../../../../type/external"
 import check from "../../../../utils/check"
 import { sdkCha } from "../../../../some-characteristic"
-import { WxcbDocGetRes, WxcbDocSetRes, WxcbDocUpdateRes } from "../../../type"
+import { WxcbDocGetRes, WxcbDocSetRes, WxcbDocUpdateRes, WxcbDocRemoveRes } from "../../../type"
 
 class DocumentRef {
 
@@ -166,7 +166,7 @@ class DocumentRef {
   /**
    * 更新一条记录
    *   如果没有找到对应的 docID 使之更新 会正常响应
-   *   只不过 stats.updated: 0
+   *   stats.updated: 0
    */
   async update(opt: { data: any }): Promise<WxcbDocUpdateRes> {
     const t = this.target
@@ -198,9 +198,35 @@ class DocumentRef {
 
   /**
    * 删除一条记录
+   *   如果文档本身不存在，会正常返回
+   *   stats.removed: 0
    */
-  async remove() {
-    
+  async remove(): Promise<WxcbDocRemoveRes> {
+    const t = this.target
+    let tmp: any;
+    let res: any;
+    if(t === SdkType.LAF) {
+      tmp = await this.lafDoc?.remove()
+      res = {
+        stats: {
+          removed: tmp.deleted,
+        },
+        errMsg: sdkCha.WXCB.errMsg_doc_remove_ok
+      }
+    }
+    else if(t === SdkType.TCB) {
+      tmp = await this.tcbDoc?.remove()
+      res = {
+        stats: {
+          removed: tmp.deleted,
+        },
+        errMsg: sdkCha.WXCB.errMsg_doc_remove_ok
+      }
+    }
+    else if(t === SdkType.WXCB) {
+      res = await this.wxcbDoc?.remove() as WxcbDocRemoveRes
+    }
+    return res
   }
 
 }

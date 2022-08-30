@@ -28,14 +28,21 @@ type WxcbDocSetRes = {
   stats: {
     created: number
     updated: number
-  },
+  }
   errMsg: string
 }
 
 type WxcbDocUpdateRes = {
   stats: {
     updated: number
-  },
+  }
+  errMsg: string
+}
+
+type WxcbDocRemoveRes = {
+  stats: {
+    removed: number
+  }
   errMsg: string
 }
 
@@ -45,4 +52,5 @@ export {
   WxcbDocGetRes,
   WxcbDocSetRes,
   WxcbDocUpdateRes,
+  WxcbDocRemoveRes,
 }
