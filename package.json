@@ -9,7 +9,8 @@
     "createCollection": "ts-node ./test/createCollection",
     "safeRule": "ts-node ./test/safeRule",
     "addFields": "ts-node ./test/aggregate-addFields",
-    "setDoc": "ts-node ./test/setDoc"
+    "setDoc": "ts-node ./test/setDoc",
+    "updateDoc": "ts-node ./test/updateDoc"
   },
   "keywords": [
     "serverless",

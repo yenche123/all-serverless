@@ -14,7 +14,7 @@ import {
 } from "../../../../type/external"
 import check from "../../../../utils/check"
 import { sdkCha } from "../../../../some-characteristic"
-import { WxcbDocGetRes, WxcbDocSetRes } from "../../../type"
+import { WxcbDocGetRes, WxcbDocSetRes, WxcbDocUpdateRes } from "../../../type"
 
 class DocumentRef {
 
@@ -158,18 +158,42 @@ class DocumentRef {
       }
     }
     else if(t === SdkType.WXCB) {
-      res = await this.wxcbDoc?.set(opt)
+      res = await this.wxcbDoc?.set(opt) as WxcbDocSetRes
     }
     return res
   }
 
   /**
    * 更新一条记录
+   *   如果没有找到对应的 docID 使之更新 会正常响应
+   *   只不过 stats.updated: 0
    */
-  async update() {
+  async update(opt: { data: any }): Promise<WxcbDocUpdateRes> {
     const t = this.target
     let tmp: any;
     let res: any;
+    if(t === SdkType.LAF) {
+      tmp = await this.lafDoc?.update(opt.data)
+      res = {
+        stats: {
+          updated: tmp.updated ?? 0,
+        },
+        errMsg: sdkCha.WXCB.errMsg_doc_update_ok
+      }
+    }
+    else if(t === SdkType.TCB) {
+      tmp = await this.tcbDoc?.update(opt.data)
+      res = {
+        stats: {
+          updated: tmp.updated ?? 0,
+        },
+        errMsg: sdkCha.WXCB.errMsg_doc_update_ok
+      }
+    }
+    else if(t === SdkType.WXCB) {
+      res = await this.wxcbDoc?.update(opt) as WxcbDocUpdateRes
+    }
+    return res
   }
 
   /**

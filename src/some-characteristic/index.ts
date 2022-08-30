@@ -11,6 +11,6 @@ export const sdkCha: Record<string, Record<string, string>> = {
     "errMsg_aggregate_ok": "collection.aggregate:ok",
     "errMsg_doc_get_ok": "document.get:ok",
     "errMsg_doc_set_ok": "document.set:ok",
-    
+    "errMsg_doc_update_ok": "document.update:ok",
   }
 }

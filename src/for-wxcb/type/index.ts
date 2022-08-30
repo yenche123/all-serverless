@@ -32,9 +32,17 @@ type WxcbDocSetRes = {
   errMsg: string
 }
 
+type WxcbDocUpdateRes = {
+  stats: {
+    updated: number
+  },
+  errMsg: string
+}
+
 export {
   WxcbCreateCollectionRes,
   WxcbAggregateEndRes,
   WxcbDocGetRes,
   WxcbDocSetRes,
+  WxcbDocUpdateRes,
 }
