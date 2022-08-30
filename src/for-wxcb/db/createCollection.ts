@@ -1,6 +1,7 @@
 import { Db } from "./index";
 import { SdkType } from "../../type";
-import { WXCB_DDD, LAF_DB, TCB_DDD, WxcbCreateCollectionRes } from "../../type/external";
+import { WXCB_DDD, LAF_DB, TCB_DDD } from "../../type/external";
+import { WxcbCreateCollectionRes } from "../type";
 import { sdkCha } from "../../some-characteristic";
 
 export const createCollection = (db: Db, collName: string): Promise<WxcbCreateCollectionRes> | void => {

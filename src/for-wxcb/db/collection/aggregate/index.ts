@@ -1,5 +1,6 @@
 import { SdkType } from "../../../../type";
-import { LafAgg, TcbAgg, WxcbAgg, WxcbAggregateEndRes } from "../../../../type/external";
+import { LafAgg, TcbAgg, WxcbAgg } from "../../../../type/external";
+import { WxcbAggregateEndRes } from "../../../type";
 import { Collection } from "../index";
 import { sdkCha } from "../../../../some-characteristic"
 
