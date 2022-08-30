@@ -39,9 +39,10 @@ export interface InitConfig {
 
 	/**
 	 * 如果当前业务环境在 laf 的云函数上
-	 * 并且调用的数据库资源也在 laf 上
-	 * 多传一个 @/cloud-sdk 生成的 cloud
-	 * 将直接使用 @/cloud-sdk 进行后续调用，免鉴权
+	 * 并且连接的数据库也在 laf 上，
+	 *   即 targetSdk 为 SdkType.LAF (ts) / laf-client-sdk (js)
+	 * 那么多传入一个 @/cloud-sdk 生成的实例 cloud 作为属性 lafCloudSdk 的值
+	 * all-serverless 将在内部直接使用 @/cloud-sdk 进行后续调用，实现在云函数上免鉴权
 	 */
 	lafCloudSdk?: LafCloud
 
