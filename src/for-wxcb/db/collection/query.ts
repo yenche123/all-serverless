@@ -58,7 +58,7 @@ class Query {
   /**
    * 发起远程请求: 查询集合数据
    */
-  async get(): Promise<WXCB_DDD.IQueryResult | void> {
+  async get(): Promise<WXCB_DDD.IQueryResult> {
     let t = this.target
     if(t === SdkType.LAF) {
       let lafCol = this.lafCol as LAF_COL
@@ -80,12 +80,14 @@ class Query {
       let res = wxcbQry ? await wxcbQry.get() : await wxcbCol.get()
       return res as WXCB_DDD.IQueryResult
     }
+
+    return { data: [], errMsg: "" }
   }
 
   /**
    * 发起远程请求: 查询数量
    */
-  async count(): Promise<WXCB_DDD.ICountResult | void> {
+  async count(): Promise<WXCB_DDD.ICountResult> {
     let t = this.target
     if(t === SdkType.LAF) {
       let lafCol = this.lafCol as LAF_COL
@@ -113,13 +115,15 @@ class Query {
       let res = wxcbQry ? await wxcbQry.count() : await wxcbCol.count()
       return res as WXCB_DDD.ICountResult
     }
+
+    return { total: 0, errMsg: "" }
   }
 
 
   /**
    * 发起远程请求: 批量更新
    */
-  async update(options: WXCB_DDD.IUpdateDocumentOptions): Promise<WXCB_DDD.IUpdateResult | void> {
+  async update(options: WXCB_DDD.IUpdateDocumentOptions): Promise<WXCB_DDD.IUpdateResult> {
     let t = this.target
     if(t === SdkType.LAF) {
       let lafCol = this.lafCol as LAF_COL
@@ -149,14 +153,16 @@ class Query {
       let wxcbCol = this.wxcbCol as WXCB_COL
       let wxcbQry = this.wxcbQry as WXCB_QRY
       let res = wxcbQry ? await wxcbQry.update(options) : await wxcbCol.update(options)
-      return res
+      return res as WXCB_DDD.IUpdateResult
     }
+
+    return { stats: { updated: 0 }, errMsg: "" }
   }
 
   /**
    * 发起远程请求: 批量删除
    */
-  async remove(options?: WXCB_DDD.IRemoveDocumentOptions): Promise<WXCB_DDD.IRemoveResult | void> {
+  async remove(options?: WXCB_DDD.IRemoveDocumentOptions): Promise<WXCB_DDD.IRemoveResult> {
     let t = this.target
     if(t === SdkType.LAF) {
       let lafCol = this.lafCol as LAF_COL
@@ -187,14 +193,15 @@ class Query {
       let wxcbCol = this.wxcbCol as WXCB_COL
       let wxcbQry = this.wxcbQry as WXCB_QRY
       let res = wxcbQry ? await wxcbQry.remove(options) : await wxcbCol.remove(options)
-      return res
+      return res as WXCB_DDD.IRemoveResult
     }
+    return { stats: { removed: 0 }, errMsg: "" }
   }
 
   /**
    * 设置查询条件
    */
-  public where(query: WXCB_DDD.IQueryCondition): Query | void {
+  public where(query: WXCB_DDD.IQueryCondition): Query {
     let t = this.target
     if(t === SdkType.LAF) {
       let lafCol = this.lafCol as LAF_COL
@@ -214,12 +221,13 @@ class Query {
       wxcbQry = wxcbQry ? wxcbQry.where(query) : wxcbCol.where(query)
       return new Query(this._db, this._colName, { wxcbQry })
     }
+    return new Query(this._db, this._colName)
   }
 
   /**
    * 设置查询结果的数量上限
    */
-  public limit(value: number): Query | void {
+  public limit(value: number): Query {
     let t = this.target
     if(t === SdkType.LAF) {
       let lafCol = this.lafCol as LAF_COL
@@ -239,12 +247,13 @@ class Query {
       wxcbQry = wxcbQry ? wxcbQry.limit(value) : wxcbCol.limit(value)
       return new Query(this._db, this._colName, { wxcbQry })
     }
+    return new Query(this._db, this._colName)
   }
 
   /**
    * 设置查询排序条件
    */
-  public orderBy(fieldPath: string, order: OrderByParam2): Query | void {
+  public orderBy(fieldPath: string, order: OrderByParam2): Query {
     let t = this.target
     if(t === SdkType.LAF) {
       let lafCol = this.lafCol as LAF_COL
@@ -264,9 +273,10 @@ class Query {
       wxcbQry = wxcbQry ? wxcbQry.orderBy(fieldPath, order) : wxcbCol.orderBy(fieldPath, order)
       return new Query(this._db, this._colName, { wxcbQry })
     }
+    return new Query(this._db, this._colName)
   }
 
-  public skip(offset: number): Query | void {
+  public skip(offset: number): Query {
     let t = this.target
     if(t === SdkType.LAF) {
       let lafCol = this.lafCol as LAF_COL
@@ -286,12 +296,13 @@ class Query {
       wxcbQry = wxcbQry ? wxcbQry.skip(offset) : wxcbCol.skip(offset)
       return new Query(this._db, this._colName, { wxcbQry })
     }
+    return new Query(this._db, this._colName)
   }
 
   /**
    * 设置要 返回 / 不返回 的字段
    */
-  public field(projection: Record<string, boolean | 1 | -1>): Query | void {
+  public field(projection: Record<string, boolean | 1 | -1>): Query {
     let t = this.target
     if(t === SdkType.LAF) {
       let lafCol = this.lafCol as LAF_COL
@@ -317,6 +328,7 @@ class Query {
       wxcbQry = wxcbQry ? wxcbQry.field(projection) : wxcbCol.field(projection)
       return new Query(this._db, this._colName, { wxcbQry })
     }
+    return new Query(this._db, this._colName)
   }
 
 }

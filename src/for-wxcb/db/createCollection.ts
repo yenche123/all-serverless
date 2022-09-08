@@ -3,8 +3,9 @@ import { SdkType } from "../../type";
 import { WXCB_DDD, LAF_DB, TCB_DDD } from "../../type/external";
 import { WxcbCreateCollectionRes } from "../type";
 import { sdkCha } from "../../some-characteristic";
+import valTool from "../../utils/val-tool";
 
-export const createCollection = (db: Db, collName: string): Promise<WxcbCreateCollectionRes> | void => {
+export const createCollection = (db: Db, collName: string): Promise<WxcbCreateCollectionRes> => {
   let t = db.target
   if(t === SdkType.LAF) {
     let lafDb = db.lafDb as LAF_DB
@@ -18,6 +19,7 @@ export const createCollection = (db: Db, collName: string): Promise<WxcbCreateCo
     let wxcbDb = db.wxcbDb as WXCB_DDD.Database
     return handle_wxcb(wxcbDb, collName)
   }
+  return valTool.getPromise<WxcbCreateCollectionRes>({ errMsg: "" })
 }
 
 /**

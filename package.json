@@ -11,7 +11,8 @@
     "addFields": "ts-node ./test/aggregate-addFields",
     "setDoc": "ts-node ./test/setDoc",
     "updateDoc": "ts-node ./test/updateDoc",
-    "removeDoc": "ts-node ./test/removeDoc"
+    "removeDoc": "ts-node ./test/removeDoc",
+    "readCol": "ts-node ./test/readCollection"
   },
   "keywords": [
     "serverless",

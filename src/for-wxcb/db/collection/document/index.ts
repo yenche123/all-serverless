@@ -15,6 +15,7 @@ import {
 import check from "../../../../utils/check"
 import { sdkCha } from "../../../../some-characteristic"
 import { WxcbDocGetRes, WxcbDocSetRes, WxcbDocUpdateRes, WxcbDocRemoveRes } from "../../../type"
+import valTool from "../../../../utils/val-tool"
 
 class DocumentRef {
 
@@ -48,7 +49,7 @@ class DocumentRef {
   /**
    * 在业务层使用 collection(colName).add({ data: {} })
    */
-  async create(param: WXCB_DDD.IAddDocumentOptions): Promise<WxcbAddRes | void> {
+  async create(param: WXCB_DDD.IAddDocumentOptions): Promise<WxcbAddRes> {
     let t = this.target
 
     let col = this._col
@@ -92,9 +93,11 @@ class DocumentRef {
     else if(t === SdkType.WXCB) {
       let wxcbCol = col.wxcbCol as WXCB_COL
       let tmpWxcb: WxcbAddRes
-      tmpWxcb = (await wxcbCol.add(param)) as WxcbAddRes
+      tmpWxcb = await wxcbCol.add(param) as WxcbAddRes
       return tmpWxcb
     }
+
+    return valTool.getPromise<WxcbAddRes>({ errMsg: "" })
   }
 
   /**

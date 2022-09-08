@@ -42,7 +42,7 @@ class Aggregate {
     return this
   }
 
-  async end(): Promise<WxcbAggregateEndRes | void> {
+  async end(): Promise<WxcbAggregateEndRes> {
     let t = this.target
     let tmp: any;
     if(t === SdkType.LAF) {
@@ -75,6 +75,7 @@ class Aggregate {
       let res = await this.wxcbAgg?.end()
       return res as WxcbAggregateEndRes
     }
+    return { list: [], errMsg: "" }
   }
 
   addFields(param: any) {
