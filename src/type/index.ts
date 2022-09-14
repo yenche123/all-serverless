@@ -69,3 +69,6 @@ export interface InitConfig {
 	 */
 	wxcbConfig?: WxcbCloudOpt
 }
+
+// 当为空时，表示未知
+export type FaaSManufacturer = "lafyun" | "tencent-scf" | ""
