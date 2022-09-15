@@ -2,7 +2,8 @@
   "name": "all-serverless",
   "version": "0.0.1",
   "description": "let everyone have their own backend without any server",
-  "main": "dist/index.js",
+  "main": "dist/commonjs/index.js",
+  "module": "dist/esm/index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc -p tsconfig.esm.json",
     "callFunction": "ts-node ./test/callFunction",
@@ -15,26 +16,34 @@
     "readCol": "ts-node ./test/readCollection"
   },
   "keywords": [
+    "miniprogram",
+    "wexin-miniprogram",
+    "wechat-miniprogram",
     "serverless",
     "cloud function",
     "laf",
     "supabase",
     "cloudbase",
     "baas",
-    "faas"
+    "faas",
+    "scf"
   ],
-  "author": "yenche123",
+  "author": "yenche123 <tsuiyenche@outlook.com> (https://u1s1.site)",
+  "contributors": [],
   "license": "MIT",
   "dependencies": {
     "@cloudbase/node-sdk": "^2.9.1",
     "@supabase/supabase-js": "^1.35.4",
     "database-ql": "^0.8.2",
     "laf-client-sdk": "^0.8.2",
-    "tsd": "^0.22.0",
     "wx-server-sdk": "^2.6.3"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
     "typescript": "^4.7.4"
+  },
+  "repository": "github:yenche123/all-serverless",
+  "bugs": {
+    "url": "https://github.com/yenche123/all-serverless/issues"
   }
 }
