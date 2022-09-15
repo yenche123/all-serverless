@@ -37,9 +37,9 @@ Serverless 确实免去了业务开发人员关于服务器运维的工作量，
 
 撇开人和设备 (机器) 所扮演的角色，如果将一个完整的应用简化成 "前端代码" + "后端代码" + "配置(环境)" + "数据"，那么值得注意的是，`all-serverless` 提供的是 "后端代码" `运行时`的迁移 (兼容) 方案，并且聚焦于 `数据库 db 的操作` 上，所以其他因素的迁移————包括后端代码如何部署、CLI脚手架、配套插件等————都不在本项目的讨论范围。
 
-在研究各个云厂商关于 Serverless SDK 的实现时，有不少是大同小异的，比如都是触发云函数有的叫 `callFunction` 有的则叫 `invokeFunction`，有的返回参数用 `data` 有的则用 `list`，仔细一看明明做的是一样的事却有着不同的`写法`，直叫人头大！
+在研究各个云厂商关于 Serverless SDK 的实现时，有不少是大同小异的，比如触发云函数有的叫 `callFunction` 有的则叫 `invokeFunction`，有的返回参数用 `data` 有的则用 `list`，仔细一看明明做的是一样的事却有着不同的`写法`，直叫人抓狂！
 
-因此，才有了 `all-serverless`。`all-serverless` 的目标是弭平各个云厂商 SDK 的差异，让开发者随意使用一种 sdk 的写法也可以快速兼容其他云平台的 Serverless 服务，远景是让万物皆可 Serverless!
+因此，`all-serverless` 的目标是弭平各个云厂商所实现的 SDK 差异，让开发者随意使用一种 sdk 之写法也可以快速兼容其他云平台的 Serverless 服务，远景是**让万物皆可 Serverless!**
 
 ## 安装
 
@@ -79,7 +79,8 @@ cloud.init({
   lafConfig: {
     // 配置见 https://www.lafyun.com/guide/db/
   },
-  // 如果直接在 laf 云函数上，可以直接传
+  // 或者，如果直接在 laf 云函数上，可以直接传 lafCloudSdk
+  lafCloudSdk: LafCloud,
 })
 
 // 数据库连接到 腾讯云开发
@@ -125,10 +126,10 @@ cloud.init(initOptions)
 |     属性     |     类型     | 必有 |       说明        |
 | ------------ | ----------- | ---- | ----------------- |
 | targetSdk    |   SdkType   |  N   |  标识连的是哪个云厂商 |
-| lafConfig    | LafCloudOpt |  N   |  同 laf-client-sdk 的初始化配置项一致，当 targetSdk 为 SdkType.LAF 时与 lafCloudSdk 二选一 |
-| lafCloudSdk  | LafCloud    |  N   |  注1，当 targetSdk 为 SdkType.LAF 时与 lafConfig 二选一 |
-| tcbConfig    | TcbCloudOpt |  N   |  当 targetSdk 为 SdkType.TCB 时必有 |
-| wxcbConfig   | WxcbCloudOpt | N   |  当 targetSdk 为 SdkType.WXCB 时必有 |
+| lafConfig    | LafCloudOpt |  N   |  同 `laf-client-sdk` 的初始化配置项一致，当 `targetSdk` 为 `SdkType.LAF` 时与 `lafCloudSdk` 二选一 |
+| lafCloudSdk  | LafCloud    |  N   |  注1，当 `targetSdk` 为 `SdkType.LAF` 时与 `lafConfig` 二选一 |
+| tcbConfig    | TcbCloudOpt |  N   |  当 `targetSdk` 为 `SdkType.TCB` 时必有 |
+| wxcbConfig   | WxcbCloudOpt | N   |  当 `targetSdk` 为 `SdkType.WXCB` 时必有 |
 
 注1: 当前云函数部署在 laf 云时，可传入 `import cloud from '@/cloud-sdk'` 的 `cloud` 作为属性 `lafCloudSdk` 的值，使后续调用执行的是免鉴权的 `cloud-sdk` 而非 `laf-client-sdk`，省略前端访问策略的配置。
 
@@ -136,9 +137,9 @@ cloud.init(initOptions)
 
 有以下枚举值
 
-|   字符串   |  最终调用的 sdk  |      说明        |
+|   枚举值   |    最终调用的 sdk        |           说明            |
 | --------- | ----------------------- | ------------------------- |
-|    LAF    |   laf-client-sdk (注2)  |  表示云环境连接到 Laf        |
+|    LAF    |   laf-client-sdk (注2)  |  表示云环境连接到 Laf       |
 |    TCB    |   @cloudbase/node-sdk   |  表示云环境连接到 腾讯云开发 |
 |    WXCB   |   wx-server-sdk         |  表示云环境连接到 微信云开发 |
 
@@ -149,7 +150,7 @@ cloud.init(initOptions)
 |     属性     |   类型   | 必有 |       说明        |
 | ------------ | ------- | ---- | ----------------- |
 |    baseUrl   | String  |  Y   | laf 应用的服务地址  |
-|  dbProxyUrl  | String  |  N   | laf 访问策略的入口地址 |
+|  dbProxyUrl  | String  |  Y   | laf 访问策略的入口地址 |
 
 该配置项同 laf-client-sdk 的使用示例:
 
