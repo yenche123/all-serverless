@@ -6,8 +6,8 @@ const checkEntryParamForInit = (cfg: InitConfig): boolean => {
     throw new Error("init() 必须指定 targetSdk 属性")
   }
 
-  if(t === SdkType.LAF && !cfg.lafConfig) {
-    throw new Error("当 targetSdk 为 SdkType.LAF 时，必须指定 lafConfig")
+  if(t === SdkType.LAF && !cfg.lafConfig && !cfg.lafCloudSdk) {
+    throw new Error("当 targetSdk 为 SdkType.LAF 时，必须指定 lafConfig 或 lafCloudSdk")
   }
 
   if(t === SdkType.TCB && !cfg.tcbConfig) {
