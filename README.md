@@ -114,7 +114,7 @@ cloud.init({
 
 你的后端云就应该像装在口袋里的巧克力，想吃哪一个就吃哪一个！
 
----
+<br>
 
 ## 初始化
 
@@ -266,7 +266,7 @@ exports.main = async (param1: FunctionContext) => {
 
 `FaaSManufacturer` 有值 `"lafyun"`、`"tencent-scf"`、`""` 分别表示laf云、腾讯云、以及未知。
 
----
+<br>
 
 ## TODO
 
