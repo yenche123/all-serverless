@@ -65,6 +65,8 @@ pnpm i all-serverless
 
 如果你不是迁移用户，没有任何历史包袱，依然非常推荐你使用 `all-serverless`。一起拒绝被任何云厂商绑定！
 
+当前支持的微信云开发写法，其初始化方式如下:
+
 ```js
 // CommonJS
 const asls = require("all-serverless")
@@ -106,11 +108,13 @@ cloud.init({
 
 ```
 
-其中，`wxcb`（weixin-cloudbase）表示使用微信云开发的写法，未来也会支持 `tcb` (腾讯云开发) 和 `laf` (laf云开发) 的写法
+其中，`wxcb`（weixin-cloudbase）表示使用微信云开发的写法，未来也会支持 `tcb` (腾讯云开发) 和 `laf` (laf云开发) 的写法。
 
 `all-serverless` 让你的后端代码与平台无关，不再被特定 sdk 绑架，快速兼容其他云平台的 sdk。
 
 你的后端云就应该像装在口袋里的巧克力，想吃哪一个就吃哪一个！
+
+---
 
 ## 初始化
 
@@ -131,7 +135,7 @@ cloud.init(initOptions)
 | tcbConfig    | TcbCloudOpt |  N   |  当 `targetSdk` 为 `SdkType.TCB` 时必有 |
 | wxcbConfig   | WxcbCloudOpt | N   |  当 `targetSdk` 为 `SdkType.WXCB` 时必有 |
 
-注1: 当前云函数部署在 laf 云时，可传入 `import cloud from '@/cloud-sdk'` 的 `cloud` 作为属性 `lafCloudSdk` 的值，使后续调用执行的是免鉴权的 `cloud-sdk` 而非 `laf-client-sdk`，省略前端访问策略的配置。
+> 注1: 当前云函数部署在 laf 云时，可传入 `import cloud from '@/cloud-sdk'` 的 `cloud` 作为属性 `lafCloudSdk` 的值，使后续调用执行的是免鉴权的 `cloud-sdk` 而非 `laf-client-sdk`，省略前端访问策略的配置。
 
 #### SdkType
 
@@ -143,7 +147,7 @@ cloud.init(initOptions)
 |    TCB    |   @cloudbase/node-sdk   |  表示云环境连接到 腾讯云开发 |
 |    WXCB   |   wx-server-sdk         |  表示云环境连接到 微信云开发 |
 
-注2: 若 `lafCloudSdk` 有值，最终调用的 sdk 改为 laf 云上的 `cloud-sdk`
+> 注2: 若 `lafCloudSdk` 有值，最终调用的 sdk 改为 laf 云上的 `cloud-sdk`
 
 #### LafCloudOpt
 
@@ -183,6 +187,86 @@ cloud.init(wxcbCloudOpt)
 
 具体请参见 [https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-sdk-api/init/server.init.html](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-sdk-api/init/server.init.html)
 
+## 初始化之后
+
+假设已有下方初始化的代码
+
+```js
+// 当前支持的微信云开发写法
+import { wxcb as cloud } from "all-serverless"
+
+// 后续将支持腾讯云开发的写法
+// import { tcb } from "all-serverless"
+// const app = tcb.init()
+
+// 后续将支持 laf 云开发的写法
+// import { LafCloud as Cloud } from "all-serverless"
+// const cloud = new Cloud()
+```
+
+我们已实现了各个 BaaS 在`数据库操作`层的大致兼容，那 FaaS 呢？
+
+各个云服务厂商的云函数之异同体现在`入口文件`、`部署方式`、`获取入参`以及`返回出参`等地方，其中`入口文件`和`部署方式`涉及各个云厂商工具链的差异，较难弭平各个 SDK 的差异，如前文所说不在本项目的讨论范围；而`返回出参`在异步的云函数上有些会直接用 `return`，有些则用 `response.send()` 来传递，这一块也较难完成统一。故 `all-serverless` 主要在 `获取入参` 之处来帮助开发者统一各端的差异。
+
+## faas 
+
+```js
+// ES6 or TypeScript
+import { faas } from "all-serverless"
+// CommonJS
+const asls = require("all-serverless")
+const { faas } = asls
+```
+
+### getEntryData(param1[, param2])
+
+获取入参
+
+#### param1
+
+必填，云函数的入口函数之第一个参数
+
+#### param2
+
+选填，云函数的入口函数之第二个参数
+
+#### 返回
+
+开发者自定义的入参 body，如果 `all-serverless` 判别环境失败则返回一个空对象 `{}`
+
+#### 使用方式
+
+```js
+// 在腾讯云函数 scf 上（腾讯云开发、微信云开发的云函数都是复用 scf 的）
+exports.main = async (param1, param2) => {
+  const event = faas.getEntryData(param1, param2)
+}
+```
+
+```ts
+// 在 laf 云函数上
+exports.main = async (param1: FunctionContext) => {
+  const event = faas.getEntryData(param1)
+}
+```
+
+### getFaaSManufacturer(param1, param2): FaaSManufacturer
+
+获取当前云函数运行所在的厂商
+
+#### param1
+
+必填，云函数的入口函数之第一个参数
+
+#### param2
+
+选填，云函数的入口函数之第二个参数
+
+#### 返回值 FaaSManufacturer
+
+`FaaSManufacturer` 有值 `"lafyun"`、`"tencent-scf"`、`""` 分别表示laf云、腾讯云、以及未知。
+
+---
 
 ## TODO
 
