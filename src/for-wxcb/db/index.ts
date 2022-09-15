@@ -1,4 +1,14 @@
-import { WXCB_DDD, LAF_DB, TCB_DDD, LafCommand, TcbCommand, WxcbCommand } from "../../type/external";
+import { 
+  WXCB_DDD, 
+  LAF_DB, 
+  TCB_DDD, 
+  LafCommand, 
+  TcbCommand, 
+  WxcbCommand,
+  LafGeo,
+  TcbGeo,
+  WxcbGeo,
+} from "../../type/external";
 import { Cloud } from "../cloud";
 import { SdkType } from "../../type"
 import { Collection } from "./collection";
@@ -66,17 +76,18 @@ class Db {
   /**
    * 注意：返回所连接云厂商的 Geo
    */
-  get Geo() {
+  get Geo(): LafGeo | TcbGeo | WxcbGeo {
     let t = this.target
     if(t === SdkType.LAF) {
-      return this.lafDb?.Geo
+      return (this.lafDb as LAF_DB).Geo
     }
     else if(t === SdkType.TCB) {
-      return this.tcbDb?.Geo
+      return (this.tcbDb as TCB_DDD.Db).Geo
     }
     else if(t === SdkType.WXCB) {
-      return this.wxcbDb?.Geo
+      return (this.wxcbDb as WXCB_DDD.Database).Geo
     }
+    return (this.lafDb as LAF_DB).Geo
   }
 
   /**

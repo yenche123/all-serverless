@@ -26,6 +26,11 @@ type LafCommand = typeof lafDb.command
 type TcbCommand = typeof TCB_DDD.Command
 type WxcbCommand = WXCB_DDD.DatabaseCommand
 
+// Geo
+type LafGeo = typeof lafDb.Geo
+type TcbGeo = TCB_DDD.GeoType
+type WxcbGeo = WXCB_DDD.IGeo
+
 // sdk 下的 collection 类型以及其下方法的入参和出参类型
 import { CollectionReference as LAF_COL, Query as LAF_QRY } from "database-ql"
 type TCB_COL = TCB_DDD.CollectionReference
@@ -82,4 +87,7 @@ export {
   LafCommand,
   TcbCommand,
   WxcbCommand,
+  LafGeo,
+  TcbGeo,
+  WxcbGeo,
 }
