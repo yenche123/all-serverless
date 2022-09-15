@@ -264,7 +264,12 @@ exports.main = async (param1: FunctionContext) => {
 
 #### 返回值 FaaSManufacturer
 
-`FaaSManufacturer` 有值 `"lafyun"`、`"tencent-scf"`、`""` 分别表示laf云、腾讯云、以及未知。
+`FaaSManufacturer` 有以下字符串: 
+
+- `lafyun`: 表示laf云 
+- `tencent-scf`: 表示腾讯云
+- `空字符串`: 表示未知
+
 
 <br>
 
