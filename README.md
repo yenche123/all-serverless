@@ -41,6 +41,14 @@ Serverless 确实免去了业务开发人员关于服务器运维的工作量，
 
 因此，`all-serverless` 的目标是弭平各个云厂商所实现的 SDK 差异，让开发者随意使用一种 sdk 之写法也可以快速兼容其他云平台的 Serverless 服务，远景是**让万物皆可 Serverless!**
 
+## 原理
+
+你可以把 `all-serverless` 当作一个**转换器**，它仅有的并且实际使用到的外部依赖目前为 `laf-client-sdk` / `@cloudbase/node-sdk` / `wx-server-sdk`。
+
+当你使用 `wx-server-sdk` 所定义的写法格式时，`all-serverless` 负责把你的请求转换成目标 SDK 的格式，最后使用目标 SDK 发起请求，得到结果后再把结果转回 `wx-server-sdk` 的写法格式再返回给你，如此实现兼容。
+
+未来也会兼容其他 SDK 的写法格式，见[TODO](#todo)。
+
 ## 安装
 
 ```sh
