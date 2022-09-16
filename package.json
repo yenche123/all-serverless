@@ -1,6 +1,6 @@
 {
   "name": "all-serverless",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "let everyone have their own backend without any server",
   "main": "dist/commonjs/index.js",
   "module": "dist/esm/index.js",
