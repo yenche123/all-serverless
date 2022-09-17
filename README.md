@@ -66,7 +66,7 @@ pnpm i all-serverless
 3. 本项目不提供数据的迁移，请在迁移云函数代码前，确保迁移后的数据库也包含原数据库的结构。
 4. 支持 `Laf` / `腾讯云开发` / `微信云开发` 之间的任意切换，然而目前仅支持微信云开发 `wx-server-sdk` 的写法格式，即初始化之后的 `cloud` 的使用方式完全与微信云开发一致。
 5. 原 `wx-server-sdk` 下关于 `openapi` / `cloudPay` / `callContainer` 属性或方法皆能在 `wxcb` 中使用，只不过 `all-serverless` 会直接调用 `wx-server-sdk` 而非你所指定的 `targetSdk`。
-6. 本项目聚焦于 `db` 数据库操作的代码迁移，也就是最常见的增删改查 CRUD 和聚合操作，故不支持文件存储 (uploadFile / getTempFileURL / deleteFile / downloadFile)、数据库事务 (startTransaction) 、广告数据上报 (analytics) 等延申操作。
+6. 本项目聚焦于 `db` 数据库操作的代码迁移，也就是最常见的增删改查 CRUD 和聚合操作，故不支持文件存储 (uploadFile / getTempFileURL / deleteFile / downloadFile)、数据库事务 (startTransaction) 、用户系统（user，包含鉴权相关的 auth）和广告数据上报 (analytics) 等延申操作。
 7. 与其说"迁移"，不如说"兼容"。
 
 ## 开新项目
