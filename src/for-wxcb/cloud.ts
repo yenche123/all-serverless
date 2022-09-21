@@ -19,21 +19,22 @@ class Cloud {
 
     this.target = t
     this.debug = cfg.debug ?? false
-    
-    if(t === SdkType.LAF) {
-      if(cfg.lafCloudSdk) {
-        this.lafCloud = cfg.lafCloudSdk
-      }
-      else if(cfg.lafConfig) {
-        this.lafCloud = new LafCloud(cfg.lafConfig)
-      }
+
+    if(cfg.lafCloudSdk) {
+      this.lafCloud = cfg.lafCloudSdk
     }
-    else if(t === SdkType.TCB) {
+    else if(cfg.lafConfig) {
+      this.lafCloud = new LafCloud(cfg.lafConfig)
+    }
+
+    if(cfg.tcbConfig) {
       this.tcbCloud = tcb.init(cfg.tcbConfig)
     }
-    else if(t === SdkType.WXCB) {
+
+    if(cfg.wxcbConfig) {
       wxcb.init(cfg.wxcbConfig)
     }
+    
   }
 
   public callContainer(options: any) {
